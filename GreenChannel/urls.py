@@ -17,6 +17,6 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
-    url(r'^greenchannel/', include('admin.urls')),
-    url(r'^admin/', admin.site.urls),
+    url(r'^greenchannel/', include('manage.urls')),
+    url(r'^manage/', admin.site.urls),
 ]

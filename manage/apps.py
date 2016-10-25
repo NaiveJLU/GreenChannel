@@ -4,4 +4,4 @@ from django.apps import AppConfig
 
 
 class RecordConfig(AppConfig):
-    name = 'admin'
+    name = 'manage'
