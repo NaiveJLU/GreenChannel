@@ -1,11 +1,28 @@
-
-from models.Student import Student
+from datetime import date
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from biz import UserManage
+from models.User import User
 import json
+
 def index(request):
-	stu = Student.objects.get(name='hehe')
-	return HttpResponse(str(stu.name) + str(stu.age))
+	user = User.objects.get(userName='prince')
+	return HttpResponse(user.password)
+
+@csrf_exempt
+def add_user(request):
+	body = request.body
+	req = json.loads(body)
+	res = UserManage.add_user(req)
+	return HttpResponse(json.dumps(res), content_type='application/json')
+
+@csrf_exempt
+def login(request):
+	body = request.body
+	req = json.loads(body)
+	username = req['username']
+	password = req['password']
+	return HttpResponse(json.dumps(UserManage.login(username, password)), content_type='application/json')
 
 @csrf_exempt
 def test_login(request):

@@ -78,9 +78,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'HOST': 'tencent.prince2015.club',
-        'NAME': 'test1',
-        'USER': 'eye',
-        'PASSWORD': 'eye123',
+        'NAME': 'greenchannel',
+        'USER': 'gc',
+        'PASSWORD': 'green123',
         'PORT': '3306'
     }
 }
