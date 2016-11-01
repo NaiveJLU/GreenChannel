@@ -1,11 +1,11 @@
 from ..models.User import User
 from django.db import IntegrityError
 from Result import failed, success
-
+from django.core.exceptions import ObjectDoesNotExist
 def add_user(user):
 
 	try:
-		User.objects.create(userName=user['userName'],
+		User.objects.create(username=user['username'],
 							password=user['password'],
 							name=user['name'],
 							gender=user['gender'],
@@ -21,7 +21,33 @@ def delete_user(userId):
 	pass
 
 def update_user(user):
-	pass
+	try:
+		md_user = User.objects.get(userId=user['user_id'])
+
+		if user['username'] is not None:
+			md_user.username = user['username']
+
+		if user['password'] is not None:
+
+			md_user.password = user['password']
+
+		if user['name'] is not None:
+			md_user.name = user['name']
+
+		if user['gender'] is not None:
+			md_user.gender = user['gender']
+
+		if user['title'] is not None:
+			md_user.title = user['title']
+
+		if user['birthday'] is not None:
+			md_user.birthday = user['birthday']
+		md_user.save()
+
+	except ObjectDoesNotExist:
+		return failed(151)
+	return success()
+
 
 def find_user(userId):
 	pass
