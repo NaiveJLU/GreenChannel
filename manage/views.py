@@ -5,34 +5,36 @@ from django.core.exceptions import ObjectDoesNotExist
 from models.User import User
 import json
 
+def GET_result(request, biz):
+	param = request.GET
+	res = biz(param)
+	return HttpResponse(json.dumps(res), content_type='application/json')
+
+def POST_result(request, biz):
+	body = request.body
+	param = json.loads(body)
+	res = biz(param)
+	return HttpResponse(json.dumps(res), content_type='application/json')
+
 def index(request):
-	try:
-		md_user = User.objects.get(userId=57)
-	except ObjectDoesNotExist:
-		return HttpResponse('error')
-	return HttpResponse(md_user.password)
+	param = request.GET
+
 
 @csrf_exempt
 def update_user(request):
-	body = request.body
-	req = json.loads(body)
-	res = UserManage.update_user(req)
-	return HttpResponse(json.dumps(res), content_type='application/json')
+	return POST_result(request, UserManage.update_user)
 
 @csrf_exempt
 def add_user(request):
-	body = request.body
-	req = json.loads(body)
-	res = UserManage.add_user(req)
-	return HttpResponse(json.dumps(res), content_type='application/json')
+	return POST_result(request, UserManage.add_user)
+
+@csrf_exempt
+def find_user(request):
+	return GET_result(request, UserManage.find_user)
 
 @csrf_exempt
 def login(request):
-	body = request.body
-	req = json.loads(body)
-	username = req['username']
-	password = req['password']
-	return HttpResponse(json.dumps(UserManage.login(username, password)), content_type='application/json')
+	return POST_result(request, UserManage.login)
 
 @csrf_exempt
 def test_login(request):

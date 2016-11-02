@@ -49,10 +49,25 @@ def update_user(user):
 	return success()
 
 
-def find_user(userId):
-	pass
+def find_user(param):
+	userId = param['user_id']
+	try:
+		user = User.objects.get(userId=userId)
+	except ObjectDoesNotExist:
+		return failed(151)
+	return success('user', {
+		'user_id' : user.userId,
+		'username': user.username,
+		'name': user.name,
+		'gender': user.gender,
+		'title': user.title,
+		'birthday': str(user.birthday)
+	})
 
-def login(username, password):
+def login(param):
+
+	username = param['username']
+	password = param['password']
 
 	try:
 		user = User.objects.get(username=username)

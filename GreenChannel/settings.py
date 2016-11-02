@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'GreenChannel.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': 'tencent.prince2015.club',
+        'HOST': 'db.prince2015.club',
         'NAME': 'greenchannel',
         'USER': 'gc',
         'PASSWORD': 'green123',
