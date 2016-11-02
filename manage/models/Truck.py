@@ -13,3 +13,11 @@ class Truck(models.Model):
 
 	# truck weight
 	truckLoad = models.FloatField()
+
+	def to_dict(self):
+		return {
+			"truck_id" : self.truckId,
+			"license" : self.license,
+			"truck_load" : self.truckLoad,
+			"truck_form" : self.truckForm
+		}

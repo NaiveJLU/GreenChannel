@@ -1,6 +1,6 @@
 from django.db import models
-from ..models import Truck
-from ..models import User
+from ..models.Truck import Truck
+from ..models.User import User
 
 class Record(models.Model):
 
@@ -12,7 +12,7 @@ class Record(models.Model):
 
 	entryTime = models.DateTimeField()
 
-	userId = models.ForeignKey(User, on_delete=models.CASCADE)
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 	isCreenChannel = models.BooleanField()
 
@@ -23,4 +23,16 @@ class Record(models.Model):
 	picturePath = models.CharField(max_length=100, null=True)
 
 	breakRule = models.BooleanField(null=True)
+
+	def to_dict(self):
+		return {
+			"record_id": self.recordId,
+			"start_time": str(self.entryTime),
+			"in_station": self.inStation,
+			"user_id": 123,
+			"break_rule": self.breakRule,
+			"is_green_channel": self.isCreenChannel,
+			"truck": self.truckId.to_dict(),
+			"produce": []
+		}
 

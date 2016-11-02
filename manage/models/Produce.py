@@ -12,8 +12,8 @@ class Produce(models.Model):
 
 	def to_dict(self):
 		return {
-			'produceId' : self.produceId,
-			'produceName' : self.produceName,
+			'produce_id' : self.produceId,
+			'produce_name' : self.produceName,
 			'density' : self.density,
 			'water' : self.water
 		}

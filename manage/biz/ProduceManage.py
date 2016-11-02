@@ -51,12 +51,7 @@ def find_produce(param):
 		produce = Produce.objects.get(produceId=produceId)
 	except ObjectDoesNotExist:
 		return failed(141)
-	return success('produce', {
-		'produce_id' : produce.produceId,
-		'produce_name': produce.produceName,
-		'density': produce.density,
-		'water': produce.water
-	})
+	return success('produce', produce.to_dict())
 
 def find_allproduce(param):
 	try:

@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from biz import UserManage
 from biz import ProduceManage
-from models.Produce import Produce
+from models.Record import Record
 import json
 
 def GET_result(request, biz):
@@ -17,8 +17,8 @@ def POST_result(request, biz):
 	return HttpResponse(json.dumps(res), content_type='application/json')
 
 def index(request):
-	produce_list = Produce.objects.all()
-	return HttpResponse(json.dumps({'aaa' : [p.to_dict() for p in produce_list]}))
+	record = Record.objects.get(recordId=1)
+	return HttpResponse(json.dumps(record.to_dict()))
 
 @csrf_exempt
 def update_user(request):
