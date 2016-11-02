@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from biz import UserManage
 from biz import ProduceManage
+from models.Produce import Produce
 import json
 
 def GET_result(request, biz):
@@ -16,8 +17,8 @@ def POST_result(request, biz):
 	return HttpResponse(json.dumps(res), content_type='application/json')
 
 def index(request):
-	param = request.GET
-
+	produce_list = Produce.objects.all()
+	return HttpResponse(json.dumps({'aaa' : [p.to_dict() for p in produce_list]}))
 
 @csrf_exempt
 def update_user(request):
@@ -30,6 +31,10 @@ def add_user(request):
 @csrf_exempt
 def find_user(request):
 	return GET_result(request, UserManage.find_user)
+
+@csrf_exempt
+def find_alluser(request):
+	return GET_result(request, UserManage.find_alluser)
 
 @csrf_exempt
 def delete_user(request):
@@ -54,4 +59,8 @@ def update_produce(request):
 @csrf_exempt
 def find_produce(request):
 	return GET_result(request, ProduceManage.find_produce)
+
+@csrf_exempt
+def find_allproduce(request):
+	return GET_result(request, ProduceManage.find_allproduce)
 

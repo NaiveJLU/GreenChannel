@@ -57,3 +57,10 @@ def find_produce(param):
 		'density': produce.density,
 		'water': produce.water
 	})
+
+def find_allproduce(param):
+	try:
+		produce_list = [produce.to_dict() for produce in Produce.objects.all()]
+		return success('produce', produce_list)
+	except :
+		return failed(133)

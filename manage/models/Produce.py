@@ -9,3 +9,11 @@ class Produce(models.Model):
 	density = models.FloatField()
 
 	water = models.FloatField()
+
+	def to_dict(self):
+		return {
+			'produceId' : self.produceId,
+			'produceName' : self.produceName,
+			'density' : self.density,
+			'water' : self.water
+		}

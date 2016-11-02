@@ -23,3 +23,13 @@ class User(models.Model):
 
 	#birthday
 	birthday = models.DateField()
+
+	def to_dict(self):
+		return {
+			'user_id': self.userId,
+			'username': self.username,
+			'name': self.name,
+			'gender': self.gender,
+			'title': self.title,
+			'birthday': str(self.birthday)
+		}

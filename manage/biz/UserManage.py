@@ -59,14 +59,14 @@ def find_user(param):
 		user = User.objects.get(userId=userId)
 	except ObjectDoesNotExist:
 		return failed(151)
-	return success('user', {
-		'user_id' : user.userId,
-		'username': user.username,
-		'name': user.name,
-		'gender': user.gender,
-		'title': user.title,
-		'birthday': str(user.birthday)
-	})
+	return success('user', user.to_dict())
+
+def find_alluser(param):
+	try:
+		user_list = [user.to_dict() for user in User.objects.all()]
+		return success('users', user_list)
+	except :
+		return failed(133)
 
 def login(param):
 
@@ -81,12 +81,5 @@ def login(param):
 	if password != user.password:
 		return failed(132)
 
-	return success('user', {
-		"userId": user.userId,
-		"userName": user.username,
-		"name": user.name,
-		"gender": user.gender,
-		"title": user.title,
-		"birthday": str(user.birthday)
-	})
+	return success('user', user.to_dict())
 
