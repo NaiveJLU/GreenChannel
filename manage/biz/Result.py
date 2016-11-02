@@ -2,8 +2,10 @@ error_message = {
 	100 : 'SUCCESS',
 	131 : 'USERNAME_NOT_EXIST',
 	132 : 'PASSWORD_NOT_MATCHED',
+	141 : 'PRODUCE_NOT_EXIST',
 	151 : 'INVALID_USER_ID',
-	161 : 'USER_EXIST'
+	161 : 'USER_EXIST',
+	171 : 'PRODUCE_EXIST',
 }
 
 def failed(errorCode):

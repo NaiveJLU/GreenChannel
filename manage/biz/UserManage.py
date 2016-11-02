@@ -2,46 +2,50 @@ from ..models.User import User
 from django.db import IntegrityError
 from Result import failed, success
 from django.core.exceptions import ObjectDoesNotExist
-def add_user(user):
+def add_user(param):
 
 	try:
-		User.objects.create(username=user['username'],
-							password=user['password'],
-							name=user['name'],
-							gender=user['gender'],
-							title=user['title'],
-							birthday=user['birthday'])
-
-		return failed(100)
+		user = User.objects.create(username=param['username'],
+							password=param['password'],
+							name=param['name'],
+							gender=param['gender'],
+							title=param['title'],
+							birthday=param['birthday'])
+		return success('user_id', user.userId)
 
 	except IntegrityError:
 		return failed(161)
 
-def delete_user(userId):
-	pass
-
-def update_user(user):
+def delete_user(param):
 	try:
-		md_user = User.objects.get(userId=user['user_id'])
+		user = User.objects.get(userId=param['user_id'])
+	except ObjectDoesNotExist:
+		return failed(151)
+	user.delete()
+	return success()
 
-		if user['username'] is not None:
-			md_user.username = user['username']
+def update_user(param):
+	try:
+		md_user = User.objects.get(userId=param['user_id'])
 
-		if user['password'] is not None:
+		if param['username'] is not None:
+			md_user.username = param['username']
 
-			md_user.password = user['password']
+		if param['password'] is not None:
 
-		if user['name'] is not None:
-			md_user.name = user['name']
+			md_user.password = param['password']
 
-		if user['gender'] is not None:
-			md_user.gender = user['gender']
+		if param['name'] is not None:
+			md_user.name = param['name']
 
-		if user['title'] is not None:
-			md_user.title = user['title']
+		if param['gender'] is not None:
+			md_user.gender = param['gender']
 
-		if user['birthday'] is not None:
-			md_user.birthday = user['birthday']
+		if param['title'] is not None:
+			md_user.title = param['title']
+
+		if param['birthday'] is not None:
+			md_user.birthday = param['birthday']
 		md_user.save()
 
 	except ObjectDoesNotExist:

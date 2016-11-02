@@ -2,9 +2,9 @@ from django.db import models
 from ..models import Truck
 from ..models import User
 
-class Record(models):
+class Record(models.Model):
 
-	recordId = models.IntegerField(primary_key=True, max_length=11)
+	recordId = models.AutoField(primary_key=True, max_length=11)
 
 	truckId = models.ForeignKey(Truck, on_delete=models.CASCADE)
 

@@ -1,8 +1,7 @@
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from biz import UserManage
-from django.core.exceptions import ObjectDoesNotExist
-from models.User import User
+from biz import ProduceManage
 import json
 
 def GET_result(request, biz):
@@ -33,36 +32,26 @@ def find_user(request):
 	return GET_result(request, UserManage.find_user)
 
 @csrf_exempt
+def delete_user(request):
+	return POST_result(request, UserManage.delete_user)
+
+@csrf_exempt
 def login(request):
 	return POST_result(request, UserManage.login)
 
 @csrf_exempt
-def test_login(request):
-	body = request.body
-	req = json.loads(body)
-	username = req['username']
-	password = req['password']
-	if username == 'ydc' and password == '123':
-		ret = {
-			"success": True,
-			"code": 100,
-			"message": "success",
-			"user":
-				{
-					"userId": 123,
-					"userName": "zhangsan",
-					"password": "dfajdsafsfjidsoajawie",
-					"name": "zhangsan",
-					"gender": 0,
-					"title": 1,
-					"birthday": "1994-08-23",
-				}
-		}
-		return HttpResponse(json.dumps(ret), content_type='application/json')
+def add_produce(request):
+	return POST_result(request, ProduceManage.add_produce)
 
-	error = {
-		"success": False,
-		"code": 131,
-		"message": "USERNAME_NOT_EXIST",
-	}
-	return HttpResponse(json.dumps(error), content_type='application/json')
+@csrf_exempt
+def delete_produce(request):
+	return POST_result(request, ProduceManage.delete_produce)
+
+@csrf_exempt
+def update_produce(request):
+	return POST_result(request, ProduceManage.update_produce)
+
+@csrf_exempt
+def find_produce(request):
+	return GET_result(request, ProduceManage.find_produce)
+

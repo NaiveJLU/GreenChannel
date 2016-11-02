@@ -4,10 +4,10 @@ from django.db import models
 class User(models.Model):
 
 	# user id
-	userId = models.IntegerField(primary_key=True, auto_created=True, max_length=11)
+	userId = models.AutoField(primary_key=True, auto_created=True, max_length=11)
 
 	# username
-	username = models.CharField(max_length=20)
+	username = models.CharField(max_length=20, unique=True)
 
 	# password
 	password = models.CharField(max_length=20)

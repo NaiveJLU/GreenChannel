@@ -1,9 +1,9 @@
 from django.db import models
 
-class Truck(models):
+class Truck(models.Model):
 
 	# truck primary key
-	truckId = models.IntegerField(primary_key=True, max_length=11)
+	truckId = models.AutoField(primary_key=True, max_length=11)
 
 	# license
 	license = models.CharField(max_length=12)
