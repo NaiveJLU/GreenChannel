@@ -1,8 +1,7 @@
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-from biz import UserManage
+from biz import UserManage, ProduceManage, RecordManage
 from biz import ProduceManage
-from models.Record import Record
 import json
 
 def GET_result(request, biz):
@@ -64,3 +63,14 @@ def find_produce(request):
 def find_allproduce(request):
 	return GET_result(request, ProduceManage.find_allproduce)
 
+@csrf_exempt
+def find_record(request):
+	return GET_result(request, RecordManage.find_record)
+
+@csrf_exempt
+def add_record(request):
+	return POST_result(request, RecordManage.add_record)
+
+@csrf_exempt
+def update_record(request):
+	return POST_result(request, RecordManage.update_record)

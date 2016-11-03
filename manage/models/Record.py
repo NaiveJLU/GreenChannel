@@ -1,12 +1,13 @@
 from django.db import models
 from ..models.Truck import Truck
 from ..models.User import User
+from ..models.Produce import Produce
 
 class Record(models.Model):
 
 	recordId = models.AutoField(primary_key=True, max_length=11)
 
-	truckId = models.ForeignKey(Truck, on_delete=models.CASCADE)
+	truck = models.ForeignKey(Truck, on_delete=models.CASCADE)
 
 	driverName = models.CharField(max_length=30)
 
@@ -14,7 +15,7 @@ class Record(models.Model):
 
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-	isCreenChannel = models.BooleanField()
+	isGreenChannel = models.BooleanField()
 
 	inStation = models.CharField(max_length=15)
 
@@ -24,6 +25,8 @@ class Record(models.Model):
 
 	breakRule = models.BooleanField(null=True)
 
+	produce = models.ManyToManyField(Produce)
+
 	def to_dict(self):
 		return {
 			"record_id": self.recordId,
@@ -31,8 +34,8 @@ class Record(models.Model):
 			"in_station": self.inStation,
 			"user_id": 123,
 			"break_rule": self.breakRule,
-			"is_green_channel": self.isCreenChannel,
-			"truck": self.truckId.to_dict(),
-			"produce": []
+			"is_green_channel": self.isGreenChannel,
+			"truck": self.truck.to_dict(),
+			"produce": [p.to_dict() for p in self.produce.all()]
 		}
 

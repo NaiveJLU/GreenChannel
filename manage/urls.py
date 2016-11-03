@@ -15,4 +15,8 @@ urlpatterns = [
     url(r'^update_produce', views.update_produce),
     url(r'^find_produce', views.find_produce),
     url(r'^find_allproduce', views.find_allproduce),
+
+    url(r'^find_record', views.find_record),
+    url(r'^add_record', views.add_record),
+    url(r'^update_record', views.update_record),
 ]
