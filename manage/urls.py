@@ -2,7 +2,7 @@ import views
 from django.conf.urls import url
 
 urlpatterns = [
-    url(r'^record', views.index),
+    url(r'^record$', views.index),
     url(r'^add_user', views.add_user),
     url(r'^update_user', views.update_user),
     url(r'^find_user', views.find_user),
@@ -19,4 +19,5 @@ urlpatterns = [
     url(r'^find_record', views.find_record),
     url(r'^add_record', views.add_record),
     url(r'^update_record', views.update_record),
+    url(r'^record_export$', views.record_export),
 ]

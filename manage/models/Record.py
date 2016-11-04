@@ -1,3 +1,4 @@
+# coding: utf-8
 from django.db import models
 from ..models.Truck import Truck
 from ..models.User import User
@@ -32,10 +33,23 @@ class Record(models.Model):
 			"record_id": self.recordId,
 			"start_time": str(self.entryTime),
 			"in_station": self.inStation,
-			"user_id": 123,
+			"user_id": self.user.userId,
 			"break_rule": self.breakRule,
 			"is_green_channel": self.isGreenChannel,
 			"truck": self.truck.to_dict(),
 			"produce": [p.to_dict() for p in self.produce.all()]
 		}
-
+	def to_csv(self):
+		return (
+			self.recordId,
+			'是'.decode('utf-8') if self.breakRule else '否'.decode('utf-8'),
+			'是'.decode('utf-8') if self.isGreenChannel else '否'.decode('utf-8'),
+			''.join([p.produceName + ' ' for p in self.produce.all()]),
+			self.user.username,
+			self.user.name,
+			self.truck.license,
+			self.truck.truckForm,
+			self.truck.truckLoad,
+			str(self.entryTime),
+			self.inStation
+		)

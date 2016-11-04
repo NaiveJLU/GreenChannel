@@ -16,8 +16,9 @@ def POST_result(request, biz):
 	return HttpResponse(json.dumps(res), content_type='application/json')
 
 def index(request):
-	record = Record.objects.get(recordId=1)
-	return HttpResponse(json.dumps(record.to_dict()))
+	#record = Record.objects.get(recordId=1)
+	#return HttpResponse(json.dumps(record.to_dict()))
+	return HttpResponse('success')
 
 @csrf_exempt
 def update_user(request):
@@ -74,3 +75,7 @@ def add_record(request):
 @csrf_exempt
 def update_record(request):
 	return POST_result(request, RecordManage.update_record)
+
+@csrf_exempt
+def record_export(request):
+	return GET_result(request, RecordManage.record_export)

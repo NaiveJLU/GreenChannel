@@ -28,7 +28,7 @@ class User(models.Model):
 		return {
 			'user_id': self.userId,
 			'username': self.username,
-			'name': self.name,
+			'name': self.name.encode('utf-8'),
 			'gender': self.gender,
 			'title': self.title,
 			'birthday': str(self.birthday)

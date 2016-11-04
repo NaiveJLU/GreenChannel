@@ -17,7 +17,7 @@ class Truck(models.Model):
 	def to_dict(self):
 		return {
 			"truck_id" : self.truckId,
-			"license" : self.license,
+			"license" : self.license.encode('utf-8'),
 			"truck_load" : self.truckLoad,
 			"truck_form" : self.truckForm
 		}

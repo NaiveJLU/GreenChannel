@@ -3,7 +3,6 @@ from ..models.User import User
 from ..models.Produce import Produce
 from ..models.Truck import Truck
 
-from django.db import IntegrityError
 from Result import failed, success
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -48,7 +47,7 @@ def add_record(param):
 						  entryTime=startTime,
 						  user=user,
 						  isGreenChannel=isGreenChannel,
-						  inStation=inStation)
+						  inStation=inStation, breakRule=False)
 	for prod in prodList:
 		record.produce.add(prod)
 	record.save()
@@ -68,7 +67,7 @@ def update_record(param):
 		md_record.save()
 
 	except ObjectDoesNotExist:
-		return failed(141)
+		return failed(111)
 	return success()
 
 def find_record(param):
@@ -80,4 +79,36 @@ def find_record(param):
 	return success('record', record.to_dict())
 
 def record_export(param):
-	pass
+
+	userId = param.get('user_id', None)
+	startTime = param.get('start_time', None)
+	endTime = param.get('end_time', None)
+	inStation = param.get('in_station', None)
+	breakRule = param.get('break_rule', None)
+	isGreenChannel = param.get('is_green_channel', None)
+
+	if breakRule is not None:
+		breakRule = bool(int(breakRule))
+	if isGreenChannel is not None:
+		isGreenChannel = bool(int(isGreenChannel))
+	print breakRule, isGreenChannel
+
+	kwargs = {}
+	if userId:
+		kwargs['user__userId'] = userId
+	if startTime and endTime:
+		kwargs['entryTime__range'] = (startTime, endTime)
+	if inStation:
+		kwargs['inStation__contains'] = inStation
+	if breakRule is not None:
+		kwargs['breakRule__exact'] = breakRule
+	if isGreenChannel is not None:
+		kwargs['isGreenChannel__exact'] = isGreenChannel
+	print kwargs
+
+	records = [ record for record in Record.objects.filter(**kwargs)]
+
+	from Util import export_csv
+	path = export_csv(records)
+
+	return success('path', path)

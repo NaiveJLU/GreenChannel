@@ -13,7 +13,7 @@ class Produce(models.Model):
 	def to_dict(self):
 		return {
 			'produce_id' : self.produceId,
-			'produce_name' : self.produceName,
+			'produce_name' : self.produceName.encode('utf-8'),
 			'density' : self.density,
 			'water' : self.water
 		}
