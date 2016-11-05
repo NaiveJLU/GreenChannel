@@ -111,4 +111,4 @@ def record_export(param):
 	from Util import export_csv
 	xid = export_csv(records)
 
-	return success('path', file_url % xid)
+	return success('file_url', file_url % xid)
