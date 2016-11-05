@@ -5,6 +5,7 @@ from ..models.Truck import Truck
 
 from Result import failed, success
 from django.core.exceptions import ObjectDoesNotExist
+from config import file_url
 
 def add_record(param):
 
@@ -104,11 +105,10 @@ def record_export(param):
 		kwargs['breakRule__exact'] = breakRule
 	if isGreenChannel is not None:
 		kwargs['isGreenChannel__exact'] = isGreenChannel
-	print kwargs
 
 	records = [ record for record in Record.objects.filter(**kwargs)]
 
 	from Util import export_csv
-	path = export_csv(records)
+	xid = export_csv(records)
 
-	return success('path', path)
+	return success('path', file_url % xid)

@@ -23,12 +23,12 @@ def random_str(length=8):
 
 def get_file_name():
 	time = datetime.now()
-	return "%04d%02d%02d%02d%02d%02d_%s.xlsx" % (time.year, time.month, time.day, \
+	return "%04d%02d%02d%02d%02d%02d_%s" % (time.year, time.month, time.day, \
 												time.hour, time.minute, time.second, random_str(4))\
 
 def export_csv(records):
 	xlsxName = get_file_name()
-	workbook = xlsxwriter.Workbook(file_base + xlsxName)
+	workbook = xlsxwriter.Workbook(file_base + xlsxName + '.xlsx')
 	worksheet = workbook.add_worksheet()
 
 	worksheet.write_row('A1',('记录编号'.decode('utf-8'),
