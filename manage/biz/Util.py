@@ -2,8 +2,19 @@
 
 from datetime import datetime
 import xlsxwriter
+from config import file_base
 
-file_base = 'C:\\Users\\Prince\\'
+
+def readFile(path, buf_size=262144):
+
+	f = open(path, "rb")
+	while True:
+		c = f.read(buf_size)
+		if c:
+			yield c
+		else:
+			break
+	f.close()
 
 def random_str(length=8):
 	import random

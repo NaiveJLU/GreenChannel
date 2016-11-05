@@ -1,7 +1,9 @@
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from biz import UserManage, ProduceManage, RecordManage
-from biz import ProduceManage
+from biz import Util
+from biz.config import file_base
+
 import json
 
 def GET_result(request, biz):
@@ -16,9 +18,8 @@ def POST_result(request, biz):
 	return HttpResponse(json.dumps(res), content_type='application/json')
 
 def index(request):
-	#record = Record.objects.get(recordId=1)
-	#return HttpResponse(json.dumps(record.to_dict()))
-	return HttpResponse('success')
+
+	return HttpResponse(Util.readFile(file_base + "test.xlsx") )
 
 @csrf_exempt
 def update_user(request):
@@ -79,3 +80,11 @@ def update_record(request):
 @csrf_exempt
 def record_export(request):
 	return GET_result(request, RecordManage.record_export)
+
+def download(request):
+	xid = request.GET['id']
+	path = file_base + xid + '.xlsx'
+
+	response = HttpResponse(Util.readFile(path), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+	response['Content-Disposition'] = 'attachment; filename="%s.xlsx"' % xid
+	return response

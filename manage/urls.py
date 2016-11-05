@@ -20,4 +20,6 @@ urlpatterns = [
     url(r'^add_record', views.add_record),
     url(r'^update_record', views.update_record),
     url(r'^record_export$', views.record_export),
+
+    url(r'^download', views.download),
 ]
