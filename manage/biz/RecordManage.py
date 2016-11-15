@@ -56,6 +56,8 @@ def add_record(param):
 
 
 def update_record(param):
+
+	from Util import save_image
 	try:
 		md_record = Record.objects.get(recordId=param['record_id'])
 
@@ -63,7 +65,9 @@ def update_record(param):
 			md_record.breakRule = param['break_rule']
 
 		if param['scan_picture'] is not None:
-			md_record.picturePath = param['scan_picture']
+			pic = param['scan_picture']
+			path = save_image(pic)
+			md_record.picturePath = path
 
 		md_record.save()
 

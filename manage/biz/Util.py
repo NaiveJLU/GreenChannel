@@ -1,9 +1,9 @@
 # coding: utf-8
 
-from datetime import datetime
 import xlsxwriter
-from config import file_base
-
+import base64
+from datetime import datetime
+from config import file_base, img_base
 
 def readFile(path, buf_size=262144):
 
@@ -41,10 +41,27 @@ def export_csv(records):
 					'货车车型'.decode('utf-8'),
 					'货车车重'.decode('utf-8'),
 					'进站时间'.decode('utf-8'),
-					'进站口'.decode('utf-8')))
+					'进站口'.decode('utf-8')),
+					'图片'.decode('utf-8'))
 	row = 2
 	for record in records:
 		worksheet.write_row('A' + str(row), record.to_csv())
+		worksheet.insert_image('L' + str(row), img_base + record.picturePath,
+							   {'x_scale': 0.3,
+								'y_scale': 0.1,
+								'positioning': 1
+								})
 		row += 1
 	workbook.close()
 	return xlsxName
+
+def save_image(b64):
+	file_name = get_file_name() + '.bmp'
+	base64_decode(b64, file_name)
+	return file_name
+
+def base64_decode(b64, file_name):
+	png = base64.b64decode(b64)
+	out = open(img_base + file_name, 'wb')
+	out.write(png)
+	out.close()
